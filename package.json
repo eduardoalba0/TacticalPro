@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^1.16.1",
+    "react-hook-form": "^7.76.0"
+  }
+}
