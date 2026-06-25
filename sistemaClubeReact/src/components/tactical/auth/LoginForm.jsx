@@ -1,7 +1,7 @@
 import { AlertCircle, ChevronRight, Shield } from 'lucide-react'
 import { motion } from 'motion/react'
 
-export function LoginForm({ error, password, username, onPasswordChange, onSubmit, onUsernameChange }) {
+export function FormularioLogin({ erro, senha, email, aoAlterarSenha, aoEnviar, aoAlterarEmail }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#E4E3E0] p-4 font-sans">
       <motion.div
@@ -16,18 +16,18 @@ export function LoginForm({ error, password, username, onPasswordChange, onSubmi
           <h1 className="text-2xl font-bold tracking-tight text-[#141414]">TACTICAL PRO</h1>
         </div>
 
-        <form className="space-y-6" onSubmit={onSubmit}>
+        <form className="space-y-6" onSubmit={aoEnviar}>
           <div>
             <label className="mb-2 block font-serif text-xs font-bold uppercase tracking-wider text-[#141414]/50 italic">
-              Usuário
+              Email
             </label>
             <input
               className="w-full border-b-2 border-[#141414] bg-transparent py-2 transition-colors focus:border-[#F27D26] focus:outline-none"
-              onChange={(event) => onUsernameChange(event.target.value)}
-              placeholder="tecnico"
+              onChange={(event) => aoAlterarEmail(event.target.value)}
+              placeholder="tecnico@clube.com"
               required
-              type="text"
-              value={username}
+              type="email"
+              value={email}
             />
           </div>
 
@@ -37,18 +37,18 @@ export function LoginForm({ error, password, username, onPasswordChange, onSubmi
             </label>
             <input
               className="w-full border-b-2 border-[#141414] bg-transparent py-2 transition-colors focus:border-[#F27D26] focus:outline-none"
-              onChange={(event) => onPasswordChange(event.target.value)}
+              onChange={(event) => aoAlterarSenha(event.target.value)}
               placeholder="••••••••"
               required
               type="password"
-              value={password}
+              value={senha}
             />
           </div>
 
-          {error && (
+          {erro && (
             <div className="flex items-center gap-2 border border-red-200 bg-red-50 p-3 text-sm text-red-600">
               <AlertCircle size={16} />
-              {error}
+              {erro}
             </div>
           )}
 

@@ -11,7 +11,7 @@ const createDefaultStatsForm = () => ({
   match_date: new Date().toISOString().split('T')[0],
 })
 
-export function StatsPage({ players = [] }) {
+export function PaginaEstatisticas({ players = [] }) {
   const [stats, setStats] = useState([])
   const [selectedPlayer, setSelectedPlayer] = useState('')
   const [formData, setFormData] = useState(createDefaultStatsForm)

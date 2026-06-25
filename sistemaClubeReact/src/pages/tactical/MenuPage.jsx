@@ -1,25 +1,56 @@
+import { useMemo } from 'react'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { AlertCircle, CheckCircle2, ClipboardList, Shield, Users } from 'lucide-react'
-import { StatCard } from '../../components/tactical/ui/StatCard.jsx'
+import { CartaoEstatistica } from '../../components/tactical/ui/StatCard.jsx'
+import registroLocalService from '../../services/registroLocalService.js'
 
-export function DashboardPage({ players = [] }) {
+export function PaginaDashboard({ players = [] }) {
   const injuredCount = players.filter((player) => player.physical_status === 'injured').length
   const availableCount = players.filter((player) => player.physical_status === 'available').length
 
+  const atividadesRecentes = useMemo(() => {
+    const atividades = registroLocalService.listarAtividades()
+
+    if (atividades.length > 0) {
+      return atividades.slice(0, 5)
+    }
+
+    return [
+      {
+        dataIso: new Date().toISOString(),
+        descricao: 'As proximas atividades do elenco aparecerao aqui conforme voce usar o sistema.',
+      },
+    ]
+  }, [])
+
+  const formatarMomento = (dataIso) => {
+    const data = new Date(dataIso)
+    if (Number.isNaN(data.getTime())) {
+      return 'Agora'
+    }
+
+    return formatDistanceToNow(data, {
+      addSuffix: true,
+      locale: ptBR,
+    })
+  }
+
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <StatCard color="bg-white" icon={<Users />} label="Total de Jogadores" value={players.length} />
-      <StatCard
+      <CartaoEstatistica color="bg-white" icon={<Users />} label="Total de Jogadores" value={players.length} />
+      <CartaoEstatistica
         color="bg-emerald-50"
         icon={<CheckCircle2 />}
         label="Disponíveis"
-        textColor="text-emerald-700"
+        corTexto="text-emerald-700"
         value={availableCount}
       />
-      <StatCard
+      <CartaoEstatistica
         color="bg-red-50"
         icon={<AlertCircle />}
         label="No Departamento Médico"
-        textColor="text-red-700"
+        corTexto="text-red-700"
         value={injuredCount}
       />
 
@@ -29,14 +60,10 @@ export function DashboardPage({ players = [] }) {
           Últimas Atividades
         </h3>
         <div className="space-y-4 font-mono text-sm">
-          {[
-            { date: 'Hoje, 14:30', action: 'Sessão de treino tático registrada' },
-            { date: 'Ontem, 18:00', action: 'Escalação para o clássico definida' },
-            { date: '08 Mar, 10:00', action: 'Novo jogador cadastrado: Marcos Silva' },
-          ].map((item, index) => (
-            <div key={index} className="flex items-start gap-4 border-b border-[#141414]/10 p-3 last:border-0">
-              <span className="whitespace-nowrap text-[#141414]/40">{item.date}</span>
-              <span className="font-bold">{item.action}</span>
+          {atividadesRecentes.map((item, index) => (
+            <div key={`${item.dataIso}-${index}`} className="flex items-start gap-4 border-b border-[#141414]/10 p-3 last:border-0">
+              <span className="whitespace-nowrap text-[#141414]/40">{formatarMomento(item.dataIso)}</span>
+              <span className="font-bold">{item.descricao}</span>
             </div>
           ))}
         </div>
@@ -72,4 +99,3 @@ export function DashboardPage({ players = [] }) {
     </div>
   )
 }
-

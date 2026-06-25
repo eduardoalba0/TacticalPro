@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 
-export function PlayerFormModal({ editingPlayer, error, formData, onClose, onSubmit, setFormData }) {
+export function ModalFormularioJogador({ editingPlayer, error, formData, onClose, onSubmit, setFormData }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#141414]/80 p-4 backdrop-blur-sm">
       <motion.div

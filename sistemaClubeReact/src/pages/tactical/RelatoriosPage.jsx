@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { LoadingSpinner } from '../../components/tactical/ui/LoadingSpinner.jsx'
+import { IndicadorCarregamento } from '../../components/tactical/ui/LoadingSpinner.jsx'
 import relatorioService from '../../services/relatorioService.js'
 
-export function ReportsPage() {
+export function PaginaRelatorios() {
   const [report, setReport] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -39,7 +39,7 @@ export function ReportsPage() {
   }, [report])
 
   if (loading) {
-    return <LoadingSpinner label="Processando dados de desempenho..." />
+    return <IndicadorCarregamento label="Processando dados de desempenho..." />
   }
 
   return (

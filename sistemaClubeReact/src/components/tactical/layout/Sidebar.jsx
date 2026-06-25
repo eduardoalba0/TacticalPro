@@ -7,18 +7,18 @@ import {
   Shield,
   Users,
 } from 'lucide-react'
-import { NavItem } from './NavItem.jsx'
+import { ItemNavegacao } from './NavItem.jsx'
 
 const navItems = [
-  { key: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-  { key: 'players', label: 'Jogadores', icon: <Users size={20} /> },
-  { key: 'lineups', label: 'Escalações', icon: <ClipboardList size={20} /> },
-  { key: 'stats', label: 'Estatísticas', icon: <BarChart3 size={20} /> },
-  { key: 'training', label: 'Treinos', icon: <Dumbbell size={20} /> },
-  { key: 'reports', label: 'Relatórios', icon: <BarChart3 size={20} /> },
+  { key: 'dashboard', rota: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+  { key: 'players', rota: '/jogadores', label: 'Jogadores', icon: <Users size={20} /> },
+  { key: 'lineups', rota: '/escalacoes', label: 'Escalações', icon: <ClipboardList size={20} /> },
+  { key: 'stats', rota: '/estatisticas', label: 'Estatísticas', icon: <BarChart3 size={20} /> },
+  { key: 'training', rota: '/treinos', label: 'Treinos', icon: <Dumbbell size={20} /> },
+  { key: 'reports', rota: '/relatorios', label: 'Relatórios', icon: <BarChart3 size={20} /> },
 ]
 
-export function Sidebar({ currentView, onChangeView, onLogout }) {
+export function BarraLateral({ currentView, onLogout }) {
   return (
     <aside className="flex w-64 flex-col border-r border-[#141414] bg-[#141414] text-white">
       <div className="border-b border-white/10 p-6">
@@ -30,12 +30,12 @@ export function Sidebar({ currentView, onChangeView, onLogout }) {
 
       <nav className="flex-1 space-y-2 p-4">
         {navItems.map((item) => (
-          <NavItem
+          <ItemNavegacao
             key={item.key}
             active={currentView === item.key}
+            href={item.rota}
             icon={item.icon}
             label={item.label}
-            onClick={() => onChangeView(item.key)}
           />
         ))}
       </nav>

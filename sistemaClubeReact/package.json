@@ -17,11 +17,12 @@
     "motion": "^12.23.12",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-router-dom": "^7.18.0",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
     "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",

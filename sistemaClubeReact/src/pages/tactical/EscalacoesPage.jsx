@@ -5,7 +5,7 @@ import { CheckCircle2 } from 'lucide-react'
 import { cn } from '../../lib/cn.js'
 import escalacaoService from '../../services/escalacaoService.js'
 
-export function LineupsPage({ players = [] }) {
+export function PaginaEscalacoes({ players = [] }) {
   const [lineups, setLineups] = useState([])
   const [selectedPlayers, setSelectedPlayers] = useState([])
   const [lineupName, setLineupName] = useState('')

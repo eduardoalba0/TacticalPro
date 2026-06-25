@@ -11,7 +11,7 @@ const createDefaultTrainingForm = () => ({
   intensity: 'Média',
 })
 
-export function TrainingPage() {
+export function PaginaTreinos() {
   const [sessions, setSessions] = useState([])
   const [formData, setFormData] = useState(createDefaultTrainingForm)
 

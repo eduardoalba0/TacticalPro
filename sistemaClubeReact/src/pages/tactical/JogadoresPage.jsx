@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Edit2, Plus, Search, Trash2 } from 'lucide-react'
-import { PlayerFormModal } from '../../components/tactical/players/PlayerFormModal.jsx'
+import { ModalFormularioJogador } from '../../components/tactical/players/PlayerFormModal.jsx'
 import { cn } from '../../lib/cn.js'
 import jogadorService from '../../services/jogadorService.js'
 
@@ -12,7 +12,7 @@ const defaultFormData = {
   physical_status: 'available',
 }
 
-export function PlayersPage({ players = [], refreshPlayers }) {
+export function PaginaJogadores({ players = [], refreshPlayers }) {
   const [showModal, setShowModal] = useState(false)
   const [editingPlayer, setEditingPlayer] = useState(null)
   const [formData, setFormData] = useState(defaultFormData)
@@ -81,6 +81,11 @@ export function PlayersPage({ players = [], refreshPlayers }) {
   }
 
   const handleDelete = async (id) => {
+    if (!Number.isFinite(Number(id))) {
+      setError('Nao foi possivel excluir: jogador sem codigo no retorno da API.')
+      return
+    }
+
     if (!window.confirm('Deseja realmente excluir este jogador?')) {
       return
     }
@@ -95,6 +100,8 @@ export function PlayersPage({ players = [], refreshPlayers }) {
 
   return (
     <div className="space-y-6">
+      {error && <div className="border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+
       <div className="flex items-center justify-between gap-4">
         <div className="relative w-full max-w-72">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 text-[#141414]/40" size={18} />
@@ -134,7 +141,10 @@ export function PlayersPage({ players = [], refreshPlayers }) {
           </thead>
           <tbody className="font-mono text-sm">
             {filteredPlayers.map((player) => (
-              <tr key={player.id} className="border-b border-[#141414]/10 transition-colors hover:bg-[#F27D26]/5">
+              <tr
+                key={player.chaveTabela || player.id || `${player.name}-${player.jersey_number}`}
+                className="border-b border-[#141414]/10 transition-colors hover:bg-[#F27D26]/5"
+              >
                 <td className="border-r border-[#141414]/10 p-4 font-bold">{player.jersey_number}</td>
                 <td className="border-r border-[#141414]/10 p-4 font-bold uppercase">{player.name}</td>
                 <td className="border-r border-[#141414]/10 p-4">{player.position}</td>
@@ -159,7 +169,8 @@ export function PlayersPage({ players = [], refreshPlayers }) {
                 </td>
                 <td className="flex gap-2 p-4">
                   <button
-                    className="border border-[#141414]/10 p-2 transition-colors hover:bg-[#141414] hover:text-white"
+                    className="border border-[#141414]/10 p-2 transition-colors hover:bg-[#141414] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                    disabled={!Number.isFinite(Number(player.id))}
                     onClick={() => {
                       setEditingPlayer(player)
                       setShowModal(true)
@@ -169,7 +180,8 @@ export function PlayersPage({ players = [], refreshPlayers }) {
                     <Edit2 size={16} />
                   </button>
                   <button
-                    className="border border-[#141414]/10 p-2 transition-colors hover:bg-red-600 hover:text-white"
+                    className="border border-[#141414]/10 p-2 transition-colors hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                    disabled={!Number.isFinite(Number(player.id))}
                     onClick={() => handleDelete(player.id)}
                     type="button"
                   >
@@ -193,7 +205,7 @@ export function PlayersPage({ players = [], refreshPlayers }) {
       </div>
 
       {showModal && (
-        <PlayerFormModal
+        <ModalFormularioJogador
           editingPlayer={editingPlayer}
           error={error}
           formData={formData}
@@ -205,4 +217,3 @@ export function PlayersPage({ players = [], refreshPlayers }) {
     </div>
   )
 }
-
