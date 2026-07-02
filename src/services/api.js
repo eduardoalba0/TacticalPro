@@ -1,10 +1,13 @@
 import axios from 'axios'
 import store from '../store.js'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || ''
+const resolvedBaseURL =
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.VITE_API_BASE_URL ||
+  '/api'
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: resolvedBaseURL,
     timeout: 10000,
 })
 
