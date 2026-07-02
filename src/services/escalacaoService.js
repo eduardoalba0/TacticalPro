@@ -29,14 +29,14 @@ const mapearEscalacaoRequest = (escalacao = {}) => ({
 
 const escalacaoService = {
   listarTodas: async () => {
-    const response = await api.get('/api/escalacoes')
+    const response = await api.get('/escalacoes')
     const escalacoes = Array.isArray(response.data) ? response.data : []
     return escalacoes.map((item, indice) => mapearEscalacaoResposta(item, indice))
   },
 
   cadastrar: async (escalacao) => {
     const payload = mapearEscalacaoRequest(escalacao)
-    const response = await api.post('/api/escalacoes', payload)
+    const response = await api.post('/escalacoes', payload)
     const escalacaoCriada = mapearEscalacaoResposta(response.data)
 
     registroLocalService.salvarMetadado('escalacoes', criarChaveEscalacao({ codigo: escalacaoCriada.id }), {

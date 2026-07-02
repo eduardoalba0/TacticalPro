@@ -3,7 +3,7 @@ import api from './api'
 const tecnicoService = {
   login: async ({ email, senha }) => {
     try {
-      const response = await api.post('/api/auth/login', { email, senha })
+      const response = await api.post('/auth/login', { email, senha })
       const resposta = response.data || {}
 
       return {

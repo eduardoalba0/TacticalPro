@@ -74,14 +74,14 @@ const mapearEstatisticaResposta = (estatistica = {}, indice = 0) => {
 
 const estatisticaService = {
   listarTodas: async () => {
-    const response = await api.get('/api/estatisticas')
+    const response = await api.get('/estatisticas')
     const estatisticas = Array.isArray(response.data) ? response.data : []
     return estatisticas.map((item, indice) => mapearEstatisticaResposta(item, indice))
   },
 
   cadastrar: async (estatistica) => {
     const payload = mapearEstatisticaRequest(estatistica)
-    const response = await api.post('/api/estatisticas', payload)
+    const response = await api.post('/estatisticas', payload)
     const estatisticaCriada = mapearEstatisticaResposta(response.data)
     const chave = criarChaveEstatistica(estatisticaCriada)
 

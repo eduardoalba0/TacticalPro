@@ -59,14 +59,14 @@ const montarFormDataAtualizacao = (payload) => {
 
 const jogadorService = {
   listarTodos: async () => {
-    const response = await api.get('/api/jogadores')
+    const response = await api.get('/jogadores')
     const jogadores = Array.isArray(response.data) ? response.data : []
     return jogadores.map((item, indice) => mapearJogadorResposta(item, indice))
   },
 
   cadastrar: async (jogador) => {
     const payload = mapearJogadorRequest(jogador)
-    const response = await api.post('/api/jogadores', payload)
+    const response = await api.post('/jogadores', payload)
     const jogadorCriado = mapearJogadorResposta(response.data)
     registroLocalService.registrarAtividade({
       descricao: `Novo jogador cadastrado: ${jogadorCriado.name || 'Atleta sem nome'}`,
@@ -81,7 +81,7 @@ const jogadorService = {
 
     const payload = mapearJogadorRequest({ ...jogador, id })
     const formData = montarFormDataAtualizacao(payload)
-    const response = await api.put(`/api/jogadores/${id}`, formData)
+    const response = await api.put(`/jogadores/${id}`, formData)
     const jogadorAtualizado = mapearJogadorResposta(response.data)
     registroLocalService.registrarAtividade({
       descricao: `Jogador atualizado: ${jogadorAtualizado.name || 'Atleta sem nome'}`,
@@ -94,7 +94,7 @@ const jogadorService = {
       throw new Error('Codigo do jogador invalido para exclusao')
     }
 
-    await api.delete(`/api/jogadores/${id}`)
+    await api.delete(`/jogadores/${id}`)
     registroLocalService.registrarAtividade({
       descricao: `Jogador removido do elenco (codigo ${id})`,
     })

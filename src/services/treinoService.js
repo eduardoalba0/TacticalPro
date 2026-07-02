@@ -25,14 +25,14 @@ const mapearTreinoResposta = (treino = {}, indice = 0) => ({
 
 const treinoService = {
   listarTodos: async () => {
-    const response = await api.get('/api/treinos')
+    const response = await api.get('/treinos')
     const treinos = Array.isArray(response.data) ? response.data : []
     return treinos.map((item, indice) => mapearTreinoResposta(item, indice))
   },
 
   cadastrar: async (treino) => {
     const payload = mapearTreinoRequest(treino)
-    const response = await api.post('/api/treinos', payload)
+    const response = await api.post('/treinos', payload)
     const treinoCriado = mapearTreinoResposta(response.data)
 
     registroLocalService.salvarMetadado('treinos', criarChaveTreino({ codigo: treinoCriado.id }), {

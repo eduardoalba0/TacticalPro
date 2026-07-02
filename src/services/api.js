@@ -1,14 +1,14 @@
 import axios from 'axios'
 import store from '../store.js'
 
-const resolvedBaseURL =
+const baseURL =
   import.meta.env.VITE_API_URL ||
   import.meta.env.VITE_API_BASE_URL ||
-  '/api'
+  'http://localhost:8080'
 
 const api = axios.create({
-    baseURL: resolvedBaseURL,
-    timeout: 10000,
+  baseURL,
+  timeout: 10000,
 })
 
 api.interceptors.request.use(
